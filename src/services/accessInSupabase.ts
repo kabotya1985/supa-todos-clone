@@ -9,21 +9,15 @@ const supabase = createClient(supabaseUrl, supabaseKey, {
 });
 
 export const getData = async (): Promise<Todopractice[] | null> => {
-  const { data: Todopractice } = await supabase
-    .from("Todo-practice")
-    .select("*");
+  const { data: Todopractice } = await supabase.from("todos").select("*");
 
   const todoData = Todopractice as Todopractice[] | null;
   return todoData;
 };
 
-export const addTask = async (
-  taskTitle: string,
-  data: Todopractice[] | null,
-  setData: React.Dispatch<React.SetStateAction<Todopractice[] | null>>
-): Promise<void> => {
+export const addTask = async (taskTitle: string, data: Todopractice[] | null, setData: React.Dispatch<React.SetStateAction<Todopractice[] | null>>): Promise<void> => {
   const { data: todoData, error } = await supabase
-    .from("Todo-practice")
+    .from("todos")
     .insert([{ title: taskTitle }])
     .select("*");
 
@@ -47,15 +41,8 @@ export const addTask = async (
   ]);
 };
 
-export const deleteTask = async (
-  deleteId: string,
-  data: Todopractice[] | null,
-  setData: React.Dispatch<React.SetStateAction<Todopractice[] | null>>
-): Promise<void> => {
-  const { error } = await supabase
-    .from("Todo-practice")
-    .delete()
-    .eq("id", deleteId);
+export const deleteTask = async (deleteId: string, data: Todopractice[] | null, setData: React.Dispatch<React.SetStateAction<Todopractice[] | null>>): Promise<void> => {
+  const { error } = await supabase.from("todos").delete().eq("id", deleteId);
 
   if (error) {
     alert(error.message);

@@ -10,31 +10,19 @@ interface TodoListProps {
 
 export const TodoList: React.FC<TodoListProps> = (props) => {
   return (
-    <Listbox
-      className="my-auto"
-      variant="faded"
-      aria-label="Listbox menu with icons"
-    >
+    <Listbox className="my-auto" variant="faded" aria-label="Listbox menu with icons">
       {props.todos?.map((todo) => (
         <ListboxItem
           key={todo.id}
           variant="bordered"
           startContent={<Checkbox lineThrough />}
           endContent={
-            <Button
-              isIconOnly
-              color="danger"
-              variant="bordered"
-              aria-label="Like"
-              onClick={(): Promise<void> =>
-                deleteTask(todo.id, props.todos, props.setTodos)
-              }
-            >
+            <Button isIconOnly color="danger" variant="bordered" aria-label="Like" onClick={(): Promise<void> => deleteTask(todo.id, props.todos, props.setTodos)}>
               <DeleteDocumentIcon />
             </Button>
           }
         >
-          {todo.title}
+          {todo.value}
         </ListboxItem>
       ))}
     </Listbox>
